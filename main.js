@@ -38,7 +38,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": null
+            "image": ""
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -61,6 +61,9 @@ console.log(posts)
 // Milestone 2 
 // Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
 
+
+
+
 // creo un array che stampa i post
 function printPosts() {
     const postContainer = document.getElementById("container");
@@ -75,7 +78,7 @@ function printPosts() {
                             <div class="post__header">
                                 <div class="post-meta">                    
                                     <div class="post-meta__icon">
-                                        <img class="profile-pic" src="${currentPost.author.image}" alt="Phil Mangione">                    
+                                        <img class="profile-pic" src="${currentPost.author.image}" alt="${currentPost.author.name}">                    
                                     </div>
                                     <div class="post-meta__data">
                                         <div class="post-meta__author">${currentPost.author.name}</div>
@@ -90,13 +93,13 @@ function printPosts() {
                             <div class="post__footer">
                                 <div class="likes js-likes">
                                     <div class="likes__cta">
-                                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                                        <a class="like-button  js-like-button" href="#" data-postid="${currentPost.id}">
                                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                                             <span class="like-button__label">Mi Piace</span>
                                         </a>
                                     </div>
                                     <div class="likes__counter">
-                                        Piace a <b id="like-counter-1" class="js-likes-counter">${currentPost.likes}</b> persone
+                                        Piace a <b id="like-counter-${currentPost.id}" class="js-likes-counter">${currentPost.likes}</b> persone
                                     </div>
                                 </div> 
                             </div>            
@@ -104,8 +107,54 @@ function printPosts() {
         
                         
 postContainer.append(post);
+
+
+// richiamo funzione per avviarla
+moreLike();
 });
 };
 
 // richiamo funzione per stamparla
 printPosts()
+
+// Milestone 3
+// Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
+
+// creo una fuznione che gestisca i click dei like
+
+function moreLike(){
+
+    const likeBtn = document.querySelectorAll(".js-like-button");
+    // dichiaro le variabili degli delle proprietà degli oggetti
+    let postId;
+    let likeCounter;
+    let likeCounterValue;
+
+
+    likeBtn.forEach(function(button) {
+
+        button.addEventListener("click", function(event) {
+            // console.log("click");
+            event.preventDefault();
+
+
+            postId = button.dataset.postid;
+            console.log("hai messo like al post: " + postId)
+            
+            likeCounter = document.querySelector(`#like-counter-${postId}`);
+            // console.log("hai messo like a: " + likeCounter + "post")
+            
+            likeCounterValue = Number(likeCounter.textContent);
+            // console.log(likeCounterValue)
+
+            
+            likeCounter.textContent = likeCounterValue + 1;
+            // console.log(likeCounter)
+
+
+        });
+    });
+
+
+
+}
