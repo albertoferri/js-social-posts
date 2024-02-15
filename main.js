@@ -56,3 +56,56 @@ const posts = [
     }
 ];
 console.log(posts)
+// fine milestone 1
+
+// Milestone 2 
+// Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
+
+// creo un array che stampa i post
+function printPosts() {
+    const postContainer = document.getElementById("container");
+    postContainer.innerHTML = "";
+    // console.log(postContainer);
+
+    posts.forEach(currentPost => {
+        
+        const post = document.createElement("div");
+        post.classList.add("post");
+        post.innerHTML = `<div class="post">
+                            <div class="post__header">
+                                <div class="post-meta">                    
+                                    <div class="post-meta__icon">
+                                        <img class="profile-pic" src="${currentPost.author.image}" alt="Phil Mangione">                    
+                                    </div>
+                                    <div class="post-meta__data">
+                                        <div class="post-meta__author">${currentPost.author.name}</div>
+                                        <div class="post-meta__time">${currentPost.created}</div>
+                                    </div>                    
+                                </div>
+                            </div>
+                            <div class="post__text">Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.</div>
+                            <div class="post__image">
+                                <img src="${currentPost.media}" alt="${currentPost.media}">
+                            </div>
+                            <div class="post__footer">
+                                <div class="likes js-likes">
+                                    <div class="likes__cta">
+                                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                                            <span class="like-button__label">Mi Piace</span>
+                                        </a>
+                                    </div>
+                                    <div class="likes__counter">
+                                        Piace a <b id="like-counter-1" class="js-likes-counter">${currentPost.likes}</b> persone
+                                    </div>
+                                </div> 
+                            </div>            
+                        </div>`;
+        
+                        
+postContainer.append(post);
+});
+};
+
+// richiamo funzione per stamparla
+printPosts()
