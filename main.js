@@ -109,9 +109,11 @@ function printPosts() {
 postContainer.append(post);
 
 
+});
+
 // richiamo funzione per avviarla
 moreLike();
-});
+
 };
 
 // richiamo funzione per stamparla
@@ -128,33 +130,55 @@ function moreLike(){
     // dichiaro le variabili degli delle proprietà degli oggetti
     let postId;
     let likeCounter;
-    let likeCounterValue;
+    let likeCounterElement;
+    // array vuoto dei like
+    let likesArray = [];
 
 
-    likeBtn.forEach(function(button) {
+    likeBtn.forEach(function(key) {
 
-        button.addEventListener("click", function(event) {
+        key.addEventListener("click", function(event) {
+            // aggiungo il colore
+            key.classList.toggle("liked")
             // console.log("click");
             event.preventDefault();
 
 
-            postId = button.dataset.postid;
+            postId = key.dataset.postid;
             console.log("hai messo like al post: " + postId)
             
             likeCounter = document.querySelector(`#like-counter-${postId}`);
             // console.log("hai messo like a: " + likeCounter + "post")
             
-            likeCounterValue = Number(likeCounter.textContent);
-            // console.log(likeCounterValue)
+            likeCounterElement = Number(likeCounter.textContent);
+            // console.log(likeCounterElement)
 
             
-            likeCounter.textContent = likeCounterValue + 1;
-            // console.log(likeCounter)
+            
+
+
+            // Milestone 3
+            // Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
+            
+            //aggiungo il numero di like dentro un array inizialmente vuoto
+            if (!likesArray.includes(postId)) {
+                // Se il postId non è nell'array
+                likesArray.push(postId);
+                // aggiorno il numero di like
+                likeCounter.textContent = likeCounterElement + 1;
+            } else {
+                // creo una funzione che mi cerca se ho già messo like, se lo trova, lo toglie dall'array
+                likesArray = likesArray.filter(function(id) {
+                    return id !== postId;
+                });
+                
+                // aggiorno il numero di like
+                likeCounter.textContent = likeCounterElement - 1;
+            }
+            console.log(likesArray); 
+            
 
 
         });
     });
-
-
-
 }
