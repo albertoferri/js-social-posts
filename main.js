@@ -38,7 +38,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": ""
+            "image": null
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -71,6 +71,11 @@ function printPosts() {
     // console.log(postContainer);
 
     posts.forEach(currentPost => {
+
+
+        // convertito data in formato italiano
+        const oldDate = new Date(currentPost.created);
+        const newDate = oldDate.toLocaleDateString("it-IT");
         
         const post = document.createElement("div");
         post.classList.add("post");
@@ -78,11 +83,11 @@ function printPosts() {
                             <div class="post__header">
                                 <div class="post-meta">                    
                                     <div class="post-meta__icon">
-                                        <img class="profile-pic" src="${currentPost.author.image}" alt="${currentPost.author.name}">                    
+                                         ${getAuthorImage(currentPost)}                   
                                     </div>
                                     <div class="post-meta__data">
                                         <div class="post-meta__author">${currentPost.author.name}</div>
-                                        <div class="post-meta__time">${currentPost.created}</div>
+                                        <div class="post-meta__time">${newDate}</div>
                                     </div>                    
                                 </div>
                             </div>
@@ -183,4 +188,28 @@ function moreLike(){
 
         });
     });
+}
+
+
+function getAuthorImage(currentPost){
+
+    if (currentPost.author.image != null){
+        return `<img class="profile-pic" src="${currentPost.author.image}" alt="${currentPost.author.name}">`;
+
+    } else {
+
+        const authorName = currentPost.author.name;
+        // divido il nome in due parole
+        const nameWords = authorName.split(" ");
+        let initials = "";
+        // ciclo forEach per prendere la prima parola
+        nameWords.forEach(currentWord => {
+            initials += currentWord[0];
+        })
+        return `<div class="profile-pic-default">
+                    <span>
+                        ${initials}
+                    </span>
+                </div>  `
+    }
 }
